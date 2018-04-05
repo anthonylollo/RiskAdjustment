@@ -1,6 +1,6 @@
 # RiskAdjustment
 
-Python code to convert CMS-HCC crosswalks and Stata hierarchy code found at [** CMS.gov **](https://www.cms.gov/Medicare/Health-Plans/MedicareAdvtgSpecRateStats/Risk-Adjustors.html) into nicely formatted tables usable in R or Python. 
+Python code to convert CMS-HCC crosswalks and Stata hierarchy code found at [**CMS.gov**](https://www.cms.gov/Medicare/Health-Plans/MedicareAdvtgSpecRateStats/Risk-Adjustors.html) into nicely formatted tables usable in R or Python. 
 
 The CMS-HCC generation is done in Python and requires pandas 0.21.0 or greater (otherwise `pandas.DataFrame.drop()` will throw an error).
 
