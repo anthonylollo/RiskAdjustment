@@ -1,0 +1,71 @@
+cc,label
+1,HIV/AIDS                                                      
+2,Septicemia/Shock                                              
+5,Opportunistic Infections                                      
+7,Metastatic Cancer and Acute Leukemia                          
+8,"Lung, Upper Digestive Tract, and Other Severe Cancers         "
+9,"Lymphatic, Head and Neck, Brain, and Other Major Cancers      "
+10,"Breast, Prostate, Colorectal and Other Cancers and Tumors     "
+15,Diabetes with Renal or Peripheral Circulatory Manifestation   
+16,Diabetes with Neurologic or Other Specified Manifestation     
+17,Diabetes with Acute Complications                             
+18,Diabetes with Ophthalmologic or Unspecified Manifestation     
+19,Diabetes without Complication                                 
+21,Protein-Calorie Malnutrition                                  
+25,End-Stage Liver Disease                                       
+26,Cirrhosis of Liver                                            
+27,Chronic Hepatitis                                             
+31,Intestinal Obstruction/Perforation                            
+32,Pancreatic Disease                                            
+33,Inflammatory Bowel Disease                                    
+37,Bone/Joint/Muscle Infections/Necrosis                         
+38,Rheumatoid Arthritis and Inflammatory Connective Tissue Disease
+44,Severe Hematological Disorders                                
+45,Disorders of Immunity                                         
+51,Drug/Alcohol Psychosis                                        
+52,Drug/Alcohol Dependence                                       
+54,Schizophrenia                                                 
+55,"Major Depressive, Bipolar, and Paranoid Disorders             "
+67,"Quadriplegia, Other Extensive Paralysis                       "
+68,Paraplegia                                                    
+69,Spinal Cord Disorders/Injuries                                
+70,Muscular Dystrophy                                            
+71,Polyneuropathy                                                
+72,Multiple Sclerosis                                            
+73,Parkinsons and Huntingtons Diseases                           
+74,Seizure Disorders and Convulsions                             
+75,"Coma, Brain Compression/Anoxic Damage                         "
+77,Respirator Dependence/Tracheostomy Status                     
+78,Respiratory Arrest                                            
+79,Cardio-Respiratory Failure and Shock                          
+80,Congestive Heart Failure                                      
+81,Acute Myocardial Infarction                                   
+82,Unstable Angina and Other Acute Ischemic Heart Disease        
+83,Angina Pectoris/Old Myocardial Infarction                     
+92,Specified Heart Arrhythmias                                   
+95,Cerebral Hemorrhage                                           
+96,Ischemic or Unspecified Stroke                                
+100,Hemiplegia/Hemiparesis                                        
+101,Cerebral Palsy and Other Paralytic Syndromes                  
+104,Vascular Disease with Complications                           
+105,Vascular Disease                                              
+107,Cystic Fibrosis                                               
+108,Chronic Obstructive Pulmonary Disease                         
+111,Aspiration and Specified Bacterial Pneumonias                 
+112,"Pneumococcal Pneumonia, Emphysema, Lung Abscess               "
+119,Proliferative Diabetic Retinopathy and Vitreous Hemorrhage    
+130,Dialysis Status                                               
+131,Renal Failure                                                 
+132,Nephritis                                                     
+148,Decubitus Ulcer of Skin                                       
+149,"Chronic Ulcer of Skin, Except Decubitus                       "
+150,Extensive Third-Degree Burns                                  
+154,Severe Head Injury                                            
+155,Major Head Injury                                             
+157,Vertebral Fractures without Spinal Cord Injury                
+158,Hip Fracture/Dislocation                                      
+161,Traumatic Amputation                                          
+164,Major Complications of Medical Care and Trauma                
+174,Major Organ Transplant Status                                 
+176,Artificial Openings for Feeding or Elimination                
+177,"Amputation Status, Lower Limb/Amputation Complications        "
