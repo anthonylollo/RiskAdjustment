@@ -37,7 +37,7 @@ The rules files list the hierarchical rules. This file can be interpreted as: if
 
 ### Generating HCCs
 
-The HCCs for each person are then generated based on the crosswalks and the years. The input table must be a long diagnosis table where each row list a single diagnosis for an individual and also includes the date and icd version. 
+The HCCs for each person are then generated based on the crosswalks and the years with RiskAdjustment.py. The input table must be a long diagnosis table where each row list a single diagnosis for an individual and also includes the date and icd version. 
 
        recip_id    icd       date  version
     0      4224  Z7689 2016-01-01       10
