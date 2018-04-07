@@ -8,7 +8,7 @@ A more throrough walkthrough of the code can be found in the [**Worked Example**
 
 ### Getting started
 
-All of the ICD to CC crosswalks have been cleaned for all years between 2010 and 2017 for both ICD9 and ICD10 and all versions of the CMS-CCs. The raw crosswalks can be found under `Raw/` and the resulting formatted crosswalks are in `Crosswalks/`. The formatted tables include column headings and columns indicating the year the mapping is valid for and the ICD version.
+All of the ICD to CC crosswalks have been cleaned for all years between 2009 and 2017 for both ICD9 and ICD10 and all versions of the CMS-HCCs. The raw crosswalks can be found under `Raw/` and the resulting formatted crosswalks are in `Crosswalks/`. The formatted tables include column headings and columns indicating the year the mapping is valid for and the ICD version.
 
         cc    icd  version  year
     0    2   0031        9  2009
