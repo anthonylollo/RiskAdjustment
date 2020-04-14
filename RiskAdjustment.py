@@ -34,18 +34,19 @@ def generate_hccs(df, version):
 
     # Bring CCs to the input DataFrame based on diagnosis codes.
     # Drop all helper columns that are no longer useful after the merge.
-    merged = df.merge(df_map, left_on=['icd', df.date.dt.year.values, 'version'],
-        right_on=['icd', 'year', 'version'], how='left').drop(columns=['date', 
-        'version', 'year', 'icd'])
+    df['year'] = df['claim_date'].dt.year
 
+    merged = (df.merge(df_map, on=['diag_code', 'year', 'version'], how='left')
+                .drop(columns=['claim_date', 'year']))
+    
     # Keep only the subset that was mapped to a CC.
     merged = merged[merged.cc.notnull()]
 
     # Now convert this to a truth table for whether a CC exists for a recipient
     # Uses the FULL list of CCs as the index.
     merged = (merged.groupby(['recip_id', 'cc'])
-                .size().unstack(fill_value=0)
-                .reindex(df_list.cc, axis=1, fill_value=0).astype(bool))
+                    .size().unstack(fill_value=0)
+                    .reindex(df_list.cc, axis=1, fill_value=0).astype(bool))
 
     # Apply heirarchies. For hierarchical codes, if the column in merged is True, 
     # set the appropriate other column to False. 
@@ -75,32 +76,34 @@ def extract_hierachy_rules(version_list):
         if cc_version == 'v12':
             # Find the logical if statement in the hierarchy.
             df = pd.DataFrame(df_logic.text.str.split('if h', 1).tolist(), 
-                columns=['junk', 'logic'])
+                              columns=['junk', 'logic'])
 
             # Locate the HCC that begins the if statement.
             df['condition'] = df['logic'].str.extract('cc(<?[0-9]*)', expand=True)
 
             # Find all HCCs to zero based on above 'condition' HCC.
             df['zeros'] = df['logic'].str.extract('(?<=i=)([\d]{1,3}(,\s?[\d]{1,3})*)', 
-                expand=True)[0]
+                                                  expand=True)[0]
 
         elif cc_version == 'v21' or cc_version == 'v22':
             # Find the logical if statement in the hierarchy.
             df = pd.DataFrame(df_logic.text.str.split(r'%SET0\(', 1).tolist(), 
-                columns=['junk', 'logic'])
+                              columns=['junk', 'logic'])
 
             # Locate the HCC that begins the if statement.
             df['condition'] = df['logic'].str.extract('CC=(<?[0-9]*)', expand=True)
 
             # Find all HCCs to zero based on above 'condition' HCC.
             df['zeros'] = df['logic'].str.extract('(?<=%STR\()([\d]{1,3}(\s?,\s?[\d]{1,3})*)', 
-                expand=True)[0]
+                                                  expand=True)[0]
 
         # Eplode the above list to a long DataFrame named rules. Rules contains one row per HCC we
         # need to zero.
         smalldf = df.loc[(df.condition.notnull()) & (df.zeros.notnull()), ['zeros', 'condition']]
-        rules = pd.concat([pd.Series(row['condition'], row['zeros'].split(',')) for _, row in 
-            smalldf.iterrows()]).reset_index().rename(columns={'index': 'to_zero', 0:'cc'})
+        rules = (pd.concat([pd.Series(row['condition'], row['zeros'].split(',')) 
+                           for _, row in  smalldf.iterrows()])
+                   .reset_index()
+                   .rename(columns={'index': 'to_zero', 0:'cc'}))
 
         # Save exploded list so we can use that in the future. 
         rules.to_csv('ConditionCategory/' + cc_version+'_rules.csv', sep=',', index=False)
@@ -134,8 +137,8 @@ def extract_cc_table(version_list):
             df['label'] = df['text'].str.extract('\"(.+?)\"', expand=True)[0]
 
         #Save only the subset of rows and columns that atually correspond to a cc and label.
-        df.loc[df.cc.notnull() & df.label.notnull(), ['cc', 'label']].to_csv('ConditionCategory/'
-            + cc_version+'_labels.csv', sep=',', index=False)
+        (df.loc[df.cc.notnull() & df.label.notnull(), ['cc', 'label']]
+           .to_csv('ConditionCategory/' + cc_version+'_labels.csv', sep=',', index=False))
 
 
 def format_crosswaks(icd9_list=None, icd10_list=None):
@@ -188,28 +191,33 @@ def format_crosswaks(icd9_list=None, icd10_list=None):
         # Need to manually append the additional CC mappings found in the VXXXXXM files.
         if cc_version == 'v12':
             dictionary1 = {'year': [int(year)], 
-                'icd': ['40403', '40413', '40493'], 'version': [9], 'cc': [80]}
+                           'icd': ['40403', '40413', '40493'], 
+                           'version': [9], 
+                           'cc': [80]}
             df_extra = pd.DataFrame([row for row in product(*dictionary1.values())], 
-                columns=dictionary1.keys())
+                                    columns=dictionary1.keys())
 
         elif cc_version == 'v21' and int(year) <= 2015:
             dictionary2 = {'year': [int(year)],
-                'icd': ['3572', '36202'], 'version': [9], 'cc': [18]}
+                           'icd': ['3572', '36202'], 
+                           'version': [9], 
+                           'cc': [18]}
             dictionary3 = {'year': [int(year)],
-                'icd': ['40401', '40403', '40411', '40413', '40491', '40493'],
-                'version': [9], 'cc': [85]}
+                           'icd': ['40401', '40403', '40411', '40413', '40491', '40493'],
+                           'version': [9], 
+                           'cc': [85]}
             df_extra = pd.DataFrame([row for row in product(*dictionary2.values())], 
-                columns=dictionary2.keys())
+                                    columns=dictionary2.keys())
             df_extra = df_extra.append(pd.DataFrame([row for row in product(*dictionary3.values())], 
-                columns=dictionary3.keys()))
+                                                    columns=dictionary3.keys()))
 
         elif cc_version == 'v22' and int(year) <= 2015:
             df_extra = pd.DataFrame({'year': [int(year)], 'icd': ['36202'], 'version': [9],
-                'cc': [18]})
+                                     'cc': [18]})
             dictionary4 = {'year': [int(year)], 
                 'icd': ['40403', '40413', '40493'], 'version': [9], 'cc': [85]}
             df_extra = df_extra.append(pd.DataFrame([row for row in product(*dictionary4.values())], 
-                columns=dictionary4.keys()))
+                                                    columns=dictionary4.keys()))
 
         df = df.append(df_extra)
 
